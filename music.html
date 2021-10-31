@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="main_div">
+      <div class="music_container">
+        <h2 id="title">Easy On Me</h2>
+        <h3 id="artist">Adele</h3>
+        <div class="img_container">
+          <img src="images/abhi-1.jpg" alt="" />
+        </div>
+        <audio src="music/abhi-1.mp3"></audio>
+        <div class="music_controls">
+          <i class="fas fa-backward" id="prev" title="Previous"></i>
+          <i class="fas fa-play main_button" id="play" title="Play"></i>
+          <i class="fas fa-forward" id="next" title="Next"></i>
+        </div>
+      </div>
+    </div>
+    <script>
+      const music = document.querySelector("audio");
+      const play = document.getElementById("play");
+      const img = document.querySelector("img");
+      const artist = document.getElementById("artist");
+      const title = document.getElementById("title");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+
+      const songs = [
+        {
+          name: "abhi-1",
+          title: "Easy on Me",
+          artist: "Adele",
+        },
+        {
+          name: "abhi-2",
+          title: "Levitating",
+          artist: "Dua Lipa",
+        },
+        {
+          name: "abhi-3",
+          title: "Bad Habits",
+          artist: "Ed Sheeran",
+        },
+      ];
+
+
+      let isPlaying = false;
+      //play
+      const playMusic = () => {
+        isPlaying = true;
+        music.play();
+        play.classList.replace("fa-play", "fa-pause");
+        play.classList.add("anime");
+      };
+
+      //pause
+      const pauseMusic = () => {
+        isPlaying = false;
+        music.pause();
+        play.classList.replace("fa-pause", "fa-play");
+        play.classList.remove("anime");
+      };
+
+      play.addEventListener("click", () => {
+        isPlaying ? pauseMusic() : playMusic();
+      });
+
+      //changing the music
+
+      const loadSong = (songs)=>{
+        title.textContent = songs.title;
+        artist.textContent = songs.artist;
+        music.src = "music/" + songs.name + ".mp3";
+        img.src = "images/" + songs.name + ".jpg";
+      };
+
+      songIndex = 0;
+      // loadSong(songs[1]);
+
+      const nextSong = ()=>{
+        songIndex = (songIndex + 1) % songs.length;//change to next song
+        loadSong(songs[songIndex]);
+        playMusic();
+      }
+      
+      const prevSong = ()=>{
+        songIndex = (songIndex - 1 + songs.length) % songs.length;//change to next song
+        loadSong(songs[songIndex]);
+        playMusic();
+      }
+
+      next.addEventListener('click',nextSong);
+      prev.addEventListener('click',prevSong);
+
+
+    </script>
+  </body>
+</html>
